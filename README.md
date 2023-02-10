@@ -44,7 +44,7 @@ The test strategy is derived from the use of a stimulus file to simulate the dra
 
 The tests also need to be verified, strong test coverage is ensured by maintaining a relatively high block, expression and bit coverage. The coverage tool used is Cadence's Incisive Comprehensive Coverage.
 
-(INSERT IMAGE)
+![Test Coverage](media/test_coverage.jpg)
 
 ## 📈 Results
 
