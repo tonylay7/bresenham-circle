@@ -40,7 +40,7 @@ if (e < 0) //if e < 0 then (x+1, y-1) is closer to the arc of the circle
 
 The test strategy is derived from the use of a stimulus file to simulate the drawing unit and view its waveforms. Simply viewing the waveforms is not enough to verify this unit as this is messy and unintuitive to read. I've developed a high-level model coded in Python in order to automate the testing procedure by comparing the outputs of the waveforms to the outputs of the high-level model - this forms the basis for my design verification.
 
-![Comparison](media/high_level_.jpg)
+![Comparison](media/high_level_comparison.jpg)
 
 The tests also need to be verified, strong test coverage is ensured by maintaining a relatively high block, expression and bit coverage. The coverage tool used is Cadence's Incisive Comprehensive Coverage.
 
