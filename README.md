@@ -2,11 +2,11 @@
 # Bresenham Circle Drawing Unit
 ## Table of Contents
 
-  * [🗺️ Overview](#-overview)
-  * [⚙️ Specification and how it works](#-gratitude-diary)
-  * [✍️ Design and Test Verification](#-gratitude-word-cloud)
-  * [📈 Results](#-heatmap-calendar)
-  * [✔️ Improvements to be made](#-mood-tracking-graph)
+  * [🗺️ Overview](#%EF%B8%8F-overview)
+  * [⚙️ Specification and how it works](#%EF%B8%8F-specification-and-how-it-works)
+  * [✍️ Design and Test Verification](#%EF%B8%8F-design-and-test-verification)
+  * [📈 Results](#-results)
+  * [✔️ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
   
 
 ## 🗺️ Overview
@@ -15,9 +15,10 @@ This is a Verilog implementation of a synchronous drawing unit that is capable o
 
 ## ⚙️ Specification and how it works
 
-Below is the Register-Level Documentation for the drawing unit.
+Below is a schematic of the drawing unit alongside its register-level documentation for all the parts of the drawing unit that are used.
 
-(INSERT IMAGE)
+![Schematic](media/drawing_unit.jpg)
+![Documentation](media/documentation.jpg)
 
 Bresenham's circle algorithm exploits the symmetric nature of a circle - we can divide the circle into 8 octants (thus each octant is 45 degrees) so that we only need to figure out how to draw a single octant, then perform reflections and swapping of x,y coordinates in the calculations of the single octant to be able to plot the rest of the octants. A decision parameter 'e' denotes whether (x+1, y-1) or (x+1, y) of the next pixel to be plotted is closer to the arc of the circle. The pseudocode is shown below.
 
@@ -37,17 +38,19 @@ if (e < 0) //if e < 0 then (x+1, y-1) is closer to the arc of the circle
 
 ## ✍️ Design and Test Verification
 
-The test strategy is derived from the use of a stimulus file to simulate the drawing unit and view its waveforms. Simply viewing the waveforms is not enough to verify this unit as this is messy and unintuitive to read. I have developed a high-level model coded in Python in order to automate the testing procedure by comparing the outputs of the waveforms to the outputs of the high-level model - this forms the basis for my design verification.
+The test strategy is derived from the use of a stimulus file to simulate the drawing unit and view its waveforms. Simply viewing the waveforms is not enough to verify this unit as this is messy and unintuitive to read. I've developed a high-level model coded in Python in order to automate the testing procedure by comparing the outputs of the waveforms to the outputs of the high-level model - this forms the basis for my design verification.
 
 (INSERT IMAGE)
 
 The tests also need to be verified, strong test coverage is ensured by maintaining a relatively high block, expression and bit coverage. The coverage tool used is Cadence's Incisive Comprehensive Coverage.
 
+(INSERT IMAGE)
+
 ## 📈 Results
 
-The figure below demonstrates the drawing unit in action
+The figure below demonstrates the drawing unit in action on a Virtual Screen.
 
-(INSERT IMAGE)
+![Output](media/output.jpg)
 
 ## ✔️ Improvements to be made
 
