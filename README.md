@@ -2,11 +2,11 @@
 # Bresenham Circle Drawing Unit
 ## Table of Contents
 
-  * [🗺️ Overview](#-overview)
-  * [⚙️ Specification and how it works](#-gratitude-diary)
-  * [✍️ Design and Test Verification](#-gratitude-word-cloud)
-  * [📈 Results](#-heatmap-calendar)
-  * [✔️ Improvements to be made](#-mood-tracking-graph)
+  * [🗺️ Overview]#%EF%B8%8F-overview)
+  * [⚙️ Specification and how it works](%EF%B8%8F-specification-and-how-it-works)
+  * [✍️ Design and Test Verification](#%EF%B8%8F-design-and-test-verification)
+  * [📈 Results](#-results)
+  * [✔️ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
   
 
 ## 🗺️ Overview
