@@ -2,8 +2,8 @@
 # Bresenham Circle Drawing Unit
 ## Table of Contents
 
-  * [🗺️ Overview]#%EF%B8%8F-overview)
-  * [⚙️ Specification and how it works](%EF%B8%8F-specification-and-how-it-works)
+  * [🗺️ Overview](#%EF%B8%8F-overview)
+  * [⚙️ Specification and how it works](#%EF%B8%8F-specification-and-how-it-works)
   * [✍️ Design and Test Verification](#%EF%B8%8F-design-and-test-verification)
   * [📈 Results](#-results)
   * [✔️ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
