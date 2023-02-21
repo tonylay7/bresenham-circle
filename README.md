@@ -84,7 +84,7 @@ The improved design has also fixed the problem where the old design would take 4
 ![Old design waveform](media/4clockcycles.jpg)
 ![New design waveform](media/2clockcycles.jpg)
 
-As a result of these changes, the maximum clock frequency has increased from 62.139MHz to 62.559MHz.
+As a result of these changes, the maximum clock frequency has increased from 62.139MHz to 62.559MHz. The state diagram and logic of the unit has been simplified massively also.
 
 
 
