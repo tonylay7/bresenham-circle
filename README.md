@@ -6,7 +6,8 @@
   * [⚙️ Specification and how it works](#%EF%B8%8F-specification-and-how-it-works)
   * [✍️ Design and Test Verification](#%EF%B8%8F-design-and-test-verification)
   * [📈 Results](#-results)
-  * [✔️ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
+  * [❗ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
+  * [✔️ New and improved circle drawing unit](#%EF%B8%8F-improvements-to-be-made)
   
 
 ## 🗺️ Overview
@@ -52,11 +53,44 @@ The figure below demonstrates the drawing unit in action on a Virtual Screen.
 
 ![Output](media/output.jpg)
 
-## ✔️ Improvements to be made
+## ❗ Improvements to be made
 
 Despite the success of the unit, there are many crucial adjustments or improvements that can be made.
 
   * The design is highly serial. There are many calculations or operations that could've been done in the same state or in a previous state. For example, in the same state that the output buses are asserted, the calculations can be updated in the meantime instead of having separate states to do the calculations. This would reduce the number of states and thus will take less cycles to plot the circle.
   * Some multiplications can be replaced with shift operations to exploit the efficiency of shifter blocks. For example, e <= e + 2*y; should be e <= e + (y<<1);
-  * Some internal registers can be smaller in size, e.g. use 10 bit registers instead of 16 bit registers for x centre coord and y centre coord as the framestore that the drawing unit plots on is only 640x480 resolution
+  * The response to the req signal is not supposed to be spurious - the unit will respond to a request even whilst its busy
+  * reset_variables is not needed and has also resulted in conflicting simultaneous values - only one operation should be allowed at a time with non-blocking assignments
+  * octants_plotted reg is not needed as this is just equal to 'octant==0'
+  * It takes 4 clock cycles to plot a pixel for a new set of octants due to the inefficient, serial design
+
+## ✔️ New and improved circle drawing unit
+
+I have decided to rework my approach to the implementation of the circle drawing unit as the design explored above does not exploit the nature of concurrency that Verilog offers.
+
+### Converting a serial design into a concurrent design
+
+As mentioned previously, many calculations could've been done in the same state or previous state. In the new design, the calculations to update the y increment (previously done in a separate state 'CALC_Y') are done at the same time as the output buses being asserted in the 'PLOT' state (i.e. whilst the unit is plotting a pixel, update the calculations for the next set of octants where necessary). Updating the x increment (previously done in a separate state 'CALC_X') can be done prior to the updating of the y increment by placing the x <= x+1; statement in the 'SETUP' state. A slightly different [algorithm](https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/) is used to complement these changes. A comparison between the state diagrams for the old vs new design is given in the image below.
+
+(insert image)
+
+The drawing unit does indeed work as intended, however due to the concurrent nature of the design, the pixels plotted are slightly different to what is expected of a serial model as e and y are updated at the same time. This is not a problem as a circle is still drawn nonetheless.
+
+![Improved Unit Comparison](media/high_level_comparison2.jpg)
+
+The improved design has also fixed the problem where the old design would take 4 clock cycles to plot a pixel for each new set of octants (as it needs to go through the CALC_X and CALC_Y states just to update the calculations). Now it consistently takes 2 clock cycles to plot a pixel as it doesn't need to go through 2 extra states to update the calculations - it has been done simultaneously in the 'SETUP' and 'PLOT' states.
+
+![Old design waveform](media/4clockcycles.jpg)
+![New design waveform](media/2clockcycles.jpg)
+
+As a result of these changes, the maximum clock frequency has increased from 62.139MHz to 62.559MHz.
+
+
+
+### Smaller changes
+  * Some multiplications have been replaced with shift operations where possible
+  * Response to req signal is no longer spurious
+  * reset_variables task has been removed
+  * octants_plotted reg has been removed
+  
 
