@@ -7,7 +7,7 @@
   * [✍️ Design and Test Verification](#%EF%B8%8F-design-and-test-verification)
   * [📈 Results](#-results)
   * [❗ Improvements to be made](#%EF%B8%8F-improvements-to-be-made)
-  * [✔️ New and improved circle drawing unit](#%EF%B8%8F-improvements-to-be-made)
+  * [✔️ New and improved circle drawing unit](#%EF%B8%8F-new-and-improved-circle-drawing-unit)
   
 
 ## 🗺️ Overview
@@ -70,9 +70,10 @@ I have decided to rework my approach to the implementation of the circle drawing
 
 ### Converting a serial design into a concurrent design
 
-As mentioned previously, many calculations could've been done in the same state or previous state. In the new design, the calculations to update the y increment (previously done in a separate state 'CALC_Y') are done at the same time as the output buses being asserted in the 'PLOT' state (i.e. whilst the unit is plotting a pixel, update the calculations for the next set of octants where necessary). Updating the x increment (previously done in a separate state 'CALC_X') can be done prior to the updating of the y increment by placing the x <= x+1; statement in the 'SETUP' state. A slightly different [algorithm](https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/) is used to complement these changes. A comparison between the state diagrams for the old vs new design is given in the image below.
+As mentioned previously, many calculations could've been done in the same state or previous state. In the new design, the calculations to update the y increment (previously done in a separate state 'CALC_Y') are done at the same time as the output buses being asserted in the 'PLOT' state (i.e. whilst the unit is plotting a pixel, update the calculations for the next set of octants where necessary). Updating the x increment (previously done in a separate state 'CALC_X') can be done prior to the updating of the y increment by placing the x <= x+1; statement in the 'SETUP' state. A slightly different [algorithm](https://www.geeksforgeeks.org/bresenhams-circle-drawing-algorithm/) is used to complement these changes. A comparison between the state diagrams for the old vs new design is given in the images below.
 
-(insert image)
+![Old Design State Diagram](media/old_design_statediagram.jpg)
+![New Design State Diagram](media/new_design_statediagram.jpg)
 
 The drawing unit does indeed work as intended, however due to the concurrent nature of the design, the pixels plotted are slightly different to what is expected of a serial model as e and y are updated at the same time. This is not a problem as a circle is still drawn nonetheless.
 
