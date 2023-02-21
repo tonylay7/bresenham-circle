@@ -12,7 +12,7 @@
 
 ## 🗺️ Overview
 
-This is a Verilog implementation of a synchronous drawing unit that is capable of drawing circles to a 640x480 framestore using Bresenham's Circle Algorithm. The design is synthesisable to a Xlinx Spartan-3 FPGA.
+This is a Verilog implementation of a synchronous drawing unit that is capable of drawing circles to a 640x480 framestore using Bresenham's Circle Algorithm. The design is synthesizable to a Xlinx Spartan-3 FPGA.
 
 ## ⚙️ Specification and how it works
 
