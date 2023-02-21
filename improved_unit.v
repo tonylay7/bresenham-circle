@@ -1,11 +1,12 @@
 // Synthesizable Verilog Implementation for a drawing unit that draws circles
 
-`define stride 640 // Framestore 'width'
+// Framestore 'width'
+`define stride 640 
 
+// States
 `define IDLE 0
 `define SETUP 1
 `define PLOT 2
-
 
 module drawing_implement( input  wire        clk,
                       input  wire        req,
@@ -29,7 +30,7 @@ module drawing_implement( input  wire        clk,
 
 /*----------------------------------------------------------------------------*/
 // FSM state
-reg [2:0] state;
+reg [1:0] state;
 
 // Internal variables for calculation
 reg [17:0] pixel_addr; // pixel address of the current calculated point
@@ -62,7 +63,6 @@ always @ (posedge clk)
       // The IDLE state is where the unit does nothing but wait for a req signal
       `IDLE:
         begin
-        reset_variables;
           if (req) // Start operations on req signal
             begin
               initialise;
@@ -71,10 +71,11 @@ always @ (posedge clk)
           else state <= `IDLE;
         end
       // The SETUP state calculates the pixel address to be plotted
+      // Simultaneously increment x as a pre-emptive measure for calculation of next set of octants in the next state
       `SETUP:
         begin
           calc_pixel_addr;
-          if(octant == 7) x <= x + 1; // Pre-emptively increment x for calculation in the next state
+          if(octant == 7) x <= x + 1; 
           state <= `PLOT;
         end
       // The PLOT state asserts the output buses and pushes out a de_req signal to ask to plot
@@ -86,7 +87,7 @@ always @ (posedge clk)
             begin
               setup_output; // Set up de_addr, de_nbyte, de_w_data output buses based on the pixel address
               de_req <= 1; // Request to plot pixel
-	            if (de_ack) 
+	      if (de_ack) 
                 begin
                   de_req <= 0; // Stop request to plot pixel
                   octant <= octant + 1; // Change our next octant to be plotted
@@ -108,7 +109,7 @@ task initialise;
     yc <= r1;
     x <= 0;
     y <= r2;
-    e <= r2;
+    e <= 3 - (r2 << 2);
     colour <= r3[7:0];
     octant <= 0;
     pixel_addr <= 0;
@@ -116,19 +117,7 @@ task initialise;
 endtask
 
 /*----------------------------------------------------------------------------*/
-// Reset internal variables to 0
-task reset_variables;
-  begin
-    x <= 0;
-    y <= 0;
-    e <= 0;
-    colour <= 0;
-    octant <= 0;
-  end
-endtask
-
-/*----------------------------------------------------------------------------*/
-// Update the x,y incremental calculations (Bresenhem's algorithm)
+// Update the x,y incremental calculations (Bresenham's algorithm)
 task update_calculations;
   begin
     if (e > 0)
@@ -192,3 +181,4 @@ assign busy = (state != `IDLE);
 assign de_rnw = 0;
 
 endmodule
+
