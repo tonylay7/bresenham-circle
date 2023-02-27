@@ -12,7 +12,7 @@
 
 ## 🗺️ Overview
 
-This is a Verilog implementation of a synchronous drawing unit that is capable of drawing circles to a 640x480 framestore using Bresenham's Circle Algorithm. The design is synthesisable to a Xlinx Spartan-3 FPGA.
+This is a Verilog implementation of a synchronous drawing unit that is capable of drawing circles to a 640x480 framestore using Bresenham's Circle Algorithm. The design is synthesizable to a Xlinx Spartan-3 FPGA.
 
 ## ⚙️ Specification and how it works
 
@@ -84,7 +84,7 @@ The improved design has also fixed the problem where the old design would take 4
 ![Old design waveform](media/4clockcycles.jpg)
 ![New design waveform](media/2clockcycles.jpg)
 
-As a result of these changes, the maximum clock frequency has increased from 62.139MHz to 62.559MHz.
+As a result of these changes, the maximum clock frequency has increased from 62.139MHz to 62.559MHz. The state diagram and logic of the unit has been simplified massively also.
 
 
 
